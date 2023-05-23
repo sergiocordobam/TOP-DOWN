@@ -1,0 +1,30 @@
+S -> aSa   | a
+S -> bSb
+S -> Mw | epsilon
+M -> rta | T
+M -> pqr 
+T -> s 
+
+S -> AS | b
+A -> SA | a
+
+A -> Sa
+S -> g | Mb | S | A
+M -> y
+S -> t
+
+A = a
+B = b, epsilon
+C = a
+
+C = {$}
+A = {b, epsilon}
+B = {}
+
+C -> AB | Bp
+A -> a
+B -> b | epsilon
+
+C -> AB
+A -> a
+B -> a | epsilon
