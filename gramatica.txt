@@ -5,6 +5,10 @@ M -> rta | T
 M -> pqr 
 T -> s 
 
+A -> B
+B -> CA
+C -> s | A
+
 S -> AS | b
 A -> SA | a
 
@@ -28,3 +32,19 @@ B -> b | epsilon
 C -> AB
 A -> a
 B -> a | epsilon
+B -> Ba
+A -> AC
+
+S -> 0S1 | 01
+S -> 1S0 | 10S 
+
+E -> TX
+T -> (E) | aY
+X -> +E | epsilon
+Y -> *T | epsilon
+
+A -> aS
+S -> Ab
+A -> bG
+G -> t
+A -> G

@@ -1,4 +1,5 @@
 from Grammar import Grammar
+from Table import Table
 
 
 def read_grammar():
@@ -18,10 +19,10 @@ def read_grammar():
 
     grammar.create_first()
     grammar.create_follow()
-    print('\n')
-    print(grammar.first, '\n')
-    print(grammar.follow)
     return grammar
 
 
-read_grammar()
+grammar = read_grammar()
+table = Table(grammar)
+table.create_table()
+table.print_table()

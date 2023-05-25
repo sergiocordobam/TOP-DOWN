@@ -9,6 +9,19 @@ class Grammar:
         self.Nterminals = {}
         self.first = {}
         self.follow = {}
+    
+    def _create_follow_Nterminal_End(self, token, left):
+        for i, s in enumerate(token):
+            if s in self.Nterminals or s in self.terminals:
+                if i >= len(token) - 1:
+                    continue
+
+                if token[i + 1] in self.Nterminals:
+
+                    if (i+2) == len(token):
+                        follow = self.follow[token[i + 1]]
+                        for key, value in follow.items():
+                            self.follow[left][key] = value
 
     def _create_follow_Nterminal_epsilon(self, token, left):
         for i, s in enumerate(token):
@@ -22,7 +35,6 @@ class Grammar:
                     for key, value in first.items():
                         if key == "epsilon":
                             follow = self.follow[token[i + 1]]
-                            print(follow)
                             for key, value in follow.items():
                                 self.follow[s][key] = value
 
@@ -51,18 +63,16 @@ class Grammar:
         for left in self.Nterminals:
             self.follow[left] = {}
 
-        for index, (left, rights) in enumerate(self.rules.items()):
-            if index == 0:
-                self.follow[left]["$"] = "$"
-            for tokens in rights:
-                for token in tokens:
-                    self._create_follow_Nterminal_terminal(token)
-                    self._create_follow_Nterminal_Nterminal(token, left)
-
-        for left, rights in self.rules.items():
-            for tokens in rights:
-                for token in tokens:
-                    self._create_follow_Nterminal_epsilon(token, left)
+        for i in range(3):
+            for index, (left, rights) in enumerate(self.rules.items()):
+                if index == 0:
+                    self.follow[left]["$"] = "$"
+                for tokens in rights:
+                    for token in tokens:
+                        self._create_follow_Nterminal_terminal(token)
+                        self._create_follow_Nterminal_Nterminal(token, left)
+                        self._create_follow_Nterminal_epsilon(token, left)
+                        self._create_follow_Nterminal_End(token, left)
 
     def _create_first(self, Nterminal, left):
         rules = self.rules[Nterminal]
@@ -104,7 +114,7 @@ class Grammar:
         for element in right:
             if element == "epsilon":
                 continue
-            hlp = re.findall("[a-z0-9\+\/\*\-\%\=]", element)
+            hlp = re.findall("[a-z0-9\+\/\*\-\%\=\(\)]", element)
             for token in hlp:
                 self.terminals[token] = token
 
