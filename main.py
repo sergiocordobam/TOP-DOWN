@@ -1,8 +1,10 @@
 from Grammar import Grammar
 from Table import Table
+from Lexer import Lexer
 
 
 def read_grammar():
+    print("Ingrese la gramatica")
     grammar = Grammar()
     line = input().split(" ")
     str1 = ""
@@ -10,6 +12,8 @@ def read_grammar():
     while line:
         left, right = line.split('->')
         right = right.split("|")
+        if grammar.start is None:
+            grammar.start = left
         grammar.add_rule(left, right)
         grammar.add_terminals(right)
         grammar.add_Nterminals(left)
@@ -19,10 +23,24 @@ def read_grammar():
 
     grammar.create_first()
     grammar.create_follow()
+
     return grammar
 
 
 grammar = read_grammar()
 table = Table(grammar)
-table.create_table()
-table.print_table()
+isLL1 = table.create_table()
+if not isLL1:
+    print("error")
+
+else:
+    print("Ingrese la cadena a analizar")
+    string = input()
+    while string:
+        lexer = Lexer(table, string)
+        isCorrect = lexer.analyze_input()
+        if not isCorrect:
+            print("no")
+        else:
+            print("si")
+        string = input()

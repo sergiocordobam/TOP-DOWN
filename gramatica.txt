@@ -48,3 +48,10 @@ S -> Ab
 A -> bG
 G -> t
 A -> G
+
+Ambigua
+E -> T + E | T
+T -> a * T | a | (E)
+
+S -> aSb | c
+
