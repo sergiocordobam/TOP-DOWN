@@ -44,6 +44,5 @@ class Table:
         return True
 
     def print_table(self):
-        print("\n")
         for left, right in self.table.items():
             print(left, right, '\n')

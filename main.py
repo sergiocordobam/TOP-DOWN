@@ -4,7 +4,7 @@ from Lexer import Lexer
 
 
 def read_grammar():
-    print("Ingrese la gramatica")
+    print("Ingrese una gramatica")
     grammar = Grammar()
     line = input().split(" ")
     str1 = ""
@@ -28,19 +28,26 @@ def read_grammar():
 
 
 grammar = read_grammar()
+print("First: ", grammar.first)
+print("Follow: ", grammar.follow)
 table = Table(grammar)
 isLL1 = table.create_table()
+print("Tabla LL(1): ")
+table.print_table()
+print("¿La gramática es LL(1)? :", isLL1)
 if not isLL1:
-    print("error")
-
+    pass
 else:
-    print("Ingrese la cadena a analizar")
-    string = input()
-    while string:
-        lexer = Lexer(table, string)
-        isCorrect = lexer.analyze_input()
-        if not isCorrect:
-            print("no")
+    while True:
+        print("Ingrese una cadena para analizar: ")
+        cadena_por_analizar = input()
+        if cadena_por_analizar == "":
+            break
         else:
-            print("si")
-        string = input()
+            lexer = Lexer(table, cadena_por_analizar)
+            isCorrect = lexer.verificar_entrada()
+            if not isCorrect:
+                print("no")
+            else:
+                print("si")
+

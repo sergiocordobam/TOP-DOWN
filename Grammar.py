@@ -97,8 +97,8 @@ class Grammar:
         for element in right:
             if element == "epsilon":
                 continue
-            hlp = re.findall("[a-z0-9\+\/\*\-\%\=\(\)]", element)
-            for token in hlp:
+            caracter = re.findall("[a-z0-9\+\/\*\-\%\=\(\)]", element)
+            for token in caracter:
                 self.terminals[token] = token
 
     def add_Nterminals(self, left):
